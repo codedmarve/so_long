@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mlx_destroy_display.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moduwole <moduwole@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 07:42:29 by moduwole          #+#    #+#             */
-/*   Updated: 2022/11/07 11:27:20 by moduwole         ###   ########.fr       */
+/*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
+/*   Updated: 2020/10/04 01:55:35 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "mlx_int.h"
 
-int	main(int argc, char **argv)
+int	mlx_destroy_display(t_xvar *xvar)
 {
-	t_frame	*game;
-
-	if (argc != 2)
-		return (29 - ft_printf("Error: argument must be one\n"));
-	game = checker(argv[1]);
-	if (game)
-		launch_graphics(game);
-	return (0);
+	XCloseDisplay(xvar->display);
 }

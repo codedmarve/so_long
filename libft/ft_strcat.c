@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moduwole <moduwole@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/29 13:14:17 by moduwole          #+#    #+#             */
-/*   Updated: 2022/04/29 13:14:17 by moduwole         ###   ########.fr       */
+/*   Created: 2022/10/28 09:30:03 by moduwole          #+#    #+#             */
+/*   Updated: 2022/10/28 09:30:03 by moduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+void	ft_strcat(char *dst, const char *src)
 {
-	int		i;
+	size_t	i;
+	size_t	dst_len;
 
+	dst_len = ft_strlen(dst);
 	i = 0;
-	if (!s || !c)
-		return (NULL);
-	while (s[i] != 0 && s[i] != (char)c)
+	while (src[i] != 0)
+	{
+		dst[dst_len + i] = src[i];
 		i++;
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
-	return (0);
+	}
+	dst[dst_len + i] = 0;
 }

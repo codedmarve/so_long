@@ -12,10 +12,12 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>
 # include <stdarg.h>
+# include <fcntl.h>
 
 typedef struct s_list
 {
@@ -80,5 +82,17 @@ int			ft_chexi(int tmp);
 char		*ft_utoa(unsigned int n);
 char		*ft_puthexi(unsigned int n, char c);
 char		*ft_putadd(unsigned long n);
+
+//get_next_line
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+# define MAX_LINE 10100
+# define MAX_FD   1024
+
+char		*get_next_line(int fd);
+void		ft_strcat(char *dst, const char *src);
+char		*ft_strcpy(char *dest, const char *src);
 
 #endif

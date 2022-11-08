@@ -1,0 +1,157 @@
+marvellous tobi oduwole
+
+
+
+# %.o: %.c
+# 	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+
+# $(NAME):	$(LIBFT) $(MLX) $(OBJS)
+# 			$(CC) $(SRC) $(LIBFT) $(MLX) -L/usr/X11/lib -lXext -lX11 -o $(NAME)
+
+# $(NAME): $(OBJ)
+# 	$(CC) $(OBJS) $(SRC) $(MLX) -Lmlx_linux -Imlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+
+
+		// if (x <= 40)
+		// 	my_mlx_pixel_put(&img, x, y, 0x00FF0000);
+		// if (x > 40 && x <= 80)
+		// 	my_mlx_pixel_put(&img, x, y, 0x0000FF00);
+		// if (x > 80 && x <= 120)
+		// 	my_mlx_pixel_put(&img, x, y, 0x000000FF);
+		// if (x > 120 && x <= 160)
+		// 	my_mlx_pixel_put(&img, x, y, 0x00FFFF00);
+		// if (x > 160 && x <= 200)
+		// 	my_mlx_pixel_put(&img, x, y, 0x0000FFFF);
+		// if (x > 200 && x <= 240)
+		// 	my_mlx_pixel_put(&img, x, y, 0x00FF00FF);
+		// if (x > 240 && x <= 280)
+		// 	my_mlx_pixel_put(&img, x, y, 0x00FFFFFF);
+		// if (x > 280 && x <= 320)
+		// 	my_mlx_pixel_put(&img, x, y, 0x00345678);
+
+
+	// my_mlx_pixel_put(&img, 2, 0, 0x00FF0000);
+	// my_mlx_pixel_put(&img, 3, 0, 0x00FF0000);
+	// my_mlx_pixel_put(&img, 319, 0, 0x00FF0000);
+	// my_mlx_pixel_put(&img, 0, 259, 0x00FF0000);
+	// my_mlx_pixel_put(&img, 319, 259, 0x00FFFF00);
+
+	// x = 160;
+	// e = 0;
+	// while (x < 320)
+	// {
+	// 	y = e;
+	// 	while(y < 320)
+	// 	{
+	// 		my_mlx_pixel_put(&img, x, y, 0x00FF00FF);
+	// 		y++;
+	// 	}
+	// 	e += 2;
+	// 	x++;
+	// }
+
+
+
+
+
+
+
+
+
+
+	typedef struct	s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+}				t_vars;
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+int	closeup(int keycode, t_vars *vars)
+{
+	printf("%i\n", keycode);
+	if (keycode == 65307)
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+		exit(0);
+	}
+	return (0);
+}
+
+int	crosskey(t_vars *vars)
+{
+	mlx_destroy_window(vars->mlx, vars->win);
+	exit(0);
+	return (0);
+}
+
+// int (*f)(int x, int y, void *param);
+
+int	mousein(int x, int y, t_vars *vars)
+{
+	printf("x = %i, y = %i\n", x, y);
+
+	// mlx_mouse_get_pos(vars->mlx, vars->win, &x, &y);
+	// mlx_mouse_move(vars->mlx, vars->win, x, y);
+	// mlx_mouse_hide(vars->mlx, vars->win);
+	mlx_mouse_show(vars->mlx, vars->win);
+	return (0);
+}
+
+int	main(void)
+{
+	t_data	img;
+	t_vars	vars;
+	int		x;
+	int		y;
+
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 520, 360, "Hello world!");
+	img.img = mlx_new_image(vars.mlx, 320, 320);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
+	x = 160;
+	int e = 161;
+	int c;
+	y = 0;
+	while (y < 320)
+	{
+		c = 0;
+		while(x < e)
+		{
+			my_mlx_pixel_put(&img, x, y, 0x0000FFFF);
+			c++;
+			x++;
+		}
+		if (y % 2 != 0)
+		{
+			x = e - c - 1;
+			e++;
+		}
+		else
+			x = e - c;
+		y++;
+	}
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 100, 20);
+	mlx_hook(vars.win, 2, 1L<<0, closeup, &vars);
+	mlx_hook(vars.win, 17, 1L<<2, crosskey, &vars);
+	// mlx_hook(vars.win, 25, 1L<<18, resize, &vars);
+	mlx_mouse_hook(vars.win, mousein, &vars);
+	mlx_loop(vars.mlx);
+
+
+
+}

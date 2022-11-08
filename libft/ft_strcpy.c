@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moduwole <moduwole@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/29 13:14:17 by moduwole          #+#    #+#             */
-/*   Updated: 2022/04/29 13:14:17 by moduwole         ###   ########.fr       */
+/*   Created: 2022/06/20 23:38:17 by moduwole          #+#    #+#             */
+/*   Updated: 2022/06/20 23:38:17 by moduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strcpy(char *dest, const char *src)
 {
 	int		i;
 
 	i = 0;
-	if (!s || !c)
-		return (NULL);
-	while (s[i] != 0 && s[i] != (char)c)
+	while (src[i] != 0)
+	{
+		dest[i] = src[i];
 		i++;
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
-	return (0);
+	}
+	dest[i] = '\0';
+	return (dest);
 }
